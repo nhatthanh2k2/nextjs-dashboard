@@ -11,16 +11,13 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
     title: 'Invoices',
 }
-
-export default async function Page(props: {
-    seachParams?: Promise<{
-        query?: string
-        page?: string
-    }>
+export default async function Page({
+    seachParams,
+}: {
+    seachParams?: { query?: string; page?: string }
 }) {
-    const searchParams = await props.seachParams
-    const query = searchParams?.query || ''
-    const currentPage = Number(searchParams?.page) || 1
+    const query = seachParams?.query || ''
+    const currentPage = Number(seachParams?.page) || 1
     const totalPages = await fetchInvoicesPages(query)
 
     return (
